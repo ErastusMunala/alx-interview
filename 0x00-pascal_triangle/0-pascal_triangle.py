@@ -18,10 +18,3 @@ def pascal_triangle(n):
         triangle.append(row)  # Add the current row to the triangle
 
     return triangle
-
-# Example usage:
-n = 5
-result = pascal_triangle(n)
-for row in result:
-    print(row)
-
