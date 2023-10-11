@@ -1,24 +1,21 @@
 #!/usr/bin/python3
+'''A module for working with lockboxes.
+'''
+
 
 def canUnlockAll(boxes):
-    if not boxes:
-        return False  # No boxes, can't unlock any
-
-    n = len(boxes)  # Total number of boxes
-    unlocked = set()  # Set to track unlocked boxes
-
-    # Initially, the first box (box 0) is unlocked
-    unlocked.add(0)
-
-    queue = [0]  # Initialize a queue for BFS with box 0
-
-    while queue:
-        current_box = queue.pop(0)  # Get the first box in the queue
-
-        for key in boxes[current_box]:
-            if key not in unlocked and key < n:
-                unlocked.add(key)
-                queue.append(key)
-
-    # If all boxes have been unlocked, return True
-    return len(unlocked) == n
+    '''Checks if all the boxes in a list of boxes containing the keys
+    (indices) to other boxes can be unlocked given that the first
+    box is unlocked.
+    '''
+    n = len(boxes)
+    seen_boxes = set([0])
+    unseen_boxes = set(boxes[0]).difference(set([0]))
+    while len(unseen_boxes) > 0:
+        boxIdx = unseen_boxes.pop()
+        if not boxIdx or boxIdx >= n or boxIdx < 0:
+            continue
+        if boxIdx not in seen_boxes:
+            unseen_boxes = unseen_boxes.union(boxes[boxIdx])
+            seen_boxes.add(boxIdx)
+    return n == len(seen_boxes)
