@@ -2,24 +2,34 @@
 '''The minimum operations coding challenge.
 '''
 
+
 def minOperations(n):
-    if n <= 1:
-        return 0  # No operations needed for n <= 1
-
-    operations = [0] * (n + 1)  # Initialize an array to store the number of operations
-
-    for i in range(2, n + 1):
-        # Initialize with a worst-case value
-        operations[i] = i
-        for j in range(2, i):
-            if i % j == 0:
-                # If i is divisible by j, it means we can copy j characters i/j times
-                # and then paste them i/j times to get i characters
-                operations[i] = min(operations[i], operations[j] + i // j)
-
-    return operations[n]
-
-# Example usage:
-n = 9
-print(minOperations(n))  # Output: 6
-
+    '''Computes the fewest number of operations needed to result
+    in exactly n H characters.
+    '''
+    if not isinstance(n, int):
+        return 0
+    ops_count = 0
+    clipboard = 0
+    done = 1
+    # print('H', end='')
+    while done < n:
+        if clipboard == 0:
+            # init (the first copy all and paste)
+            clipboard = done
+            done += clipboard
+            ops_count += 2
+            # print('-(11)->{}'.format('H' * done), end='')
+        elif n - done > 0 and (n - done) % done == 0:
+            # copy all and paste
+            clipboard = done
+            done += clipboard
+            ops_count += 2
+            # print('-(11)->{}'.format('H' * done), end='')
+        elif clipboard > 0:
+            # paste
+            done += clipboard
+            ops_count += 1
+            # print('-(01)->{}'.format('H' * done), end='')
+    # print('')
+    return ops_count
