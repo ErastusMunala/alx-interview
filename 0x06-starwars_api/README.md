@@ -58,3 +58,4 @@ Wicket Systri Warrick
 Nien Nunb
 Bib Fortuna
 alexa@ubuntu:~/0x06$ 
+ this script takes a film ID as a command-line argument, fetches information about characters in that film from the Star Wars API, and then displays their names.
